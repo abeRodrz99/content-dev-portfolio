@@ -16,6 +16,7 @@
   border: none;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
+  text-align: center;        /* ADD THIS — fixes text position jump */
 }
 
 .filter-btn:hover {
@@ -26,4 +27,7 @@
 .filter-btn.active {
   background: var(--text-primary);
   color: var(--bg);
+  font-weight: 500;                    
 }
+
+
