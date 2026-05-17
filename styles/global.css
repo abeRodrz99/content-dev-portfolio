@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
+
+:root {
+  --font: 'Geist', system-ui, sans-serif;
+  --bg: #ffffff;
+  --surface: #f4f4f5;
+  --border: #e4e4e7;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-tertiary: #a1a1aa;
+  --spotlight: rgba(24,24,27,0.055);
+  --spotlight-border: rgba(161,161,170,0.55);
+  --radius: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #09090b;
+    --surface: #18181b;
+    --border: #27272a;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-tertiary: #52525b;
+    --spotlight: rgba(250,250,250,0.045);
+    --spotlight-border: rgba(161,161,170,0.45);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 80px 16px 80px;
+}
+
+.section { margin-bottom: 80px; }
+
+.section-title {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.fade-up   { animation: fadeIn 0.5s ease both; }
+.fade-up-2 { animation: fadeIn 0.5s ease 0.06s both; }
+.fade-up-3 { animation: fadeIn 0.5s ease 0.12s both; }
+.fade-up-4 { animation: fadeIn 0.5s ease 0.18s both; }
+
+@media (max-width: 480px) {
+  .page { padding: 56px 16px 60px; }
+}
