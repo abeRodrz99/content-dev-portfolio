@@ -1,8 +1,16 @@
 [
     {
-        "title": "Project Name",
-        "description": "What it does and how you built it.",
-        "url": "https://github.com/abeRodrz99/your-repo",
-        "tech": ["React", "Node.js"]
+        "title": "Lupe and Orlando Wedding Website",
+        "description": "A custom, bilingual wedding website featuring an interactive guest RSVP system, dietary preference tracking, and localized travel logistics.",
+        "url": "https://lupeandorlando.com/",
+        "tech": ["React", "Node.js"],
+        "imgUrl": "https://i.postimg.cc/y8vDgtGk/Screenshot-2026-09-02-200723.png"
+    },
+    {
+        "title": "Fluence Landing Page",
+        "description": "A sleek landing page concept and waitlist landing experience designed to showcase and validate a future fitness application.",
+        "url": "https://fluence-app-rho.vercel.app/",
+        "tech": ["React", "Tailwind CSS"],
+        "imgUrl": "https://i.postimg.cc/qvkt741c/Screenshot-2026-09-02-200649.png"
     }  
 ]
