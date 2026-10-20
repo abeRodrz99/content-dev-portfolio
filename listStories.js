@@ -14,9 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
     layout.className = 'content-layout';
 
     const groups = [
-      { number: '01', title: 'SEO & Generative Engine Optimization', description: 'Search strategy, evergreen content and AI search visibility.', category: 'SEO & GEO', primary: true },
-      { number: '02', title: 'Investigative & Accountability Reporting', description: 'Original research, accountability and deep-dive reporting.', category: 'Investigative & Accountability Reporting', primary: false },
-      { number: '03', title: 'General & Feature Reporting', description: 'News, interviews, profiles and broader editorial coverage.', category: 'General & Feature Reporting', primary: false }
+      {
+        number: '01',
+        title: 'SEO & Generative Engine Optimization',
+        description: 'Search-focused explainers, evergreen guides and topic-led content designed to answer real questions and help audiences discover useful information.',
+        category: 'SEO & GEO',
+        primary: true
+      },
+      {
+        number: '02',
+        title: 'Investigative & Accountability Reporting',
+        description: 'Evidence-led reporting on public institutions and unequal outcomes, using records, data and on-the-ground reporting to examine who is affected and why.',
+        category: 'Investigative & Accountability Reporting',
+        primary: false
+      },
+      {
+        number: '03',
+        title: 'General & Feature Reporting',
+        description: 'Profiles, community reporting and industry stories that bring people’s experiences, local context and emerging trends into focus.',
+        category: 'General & Feature Reporting',
+        primary: false
+      }
     ];
 
     function makeStoryLink(story) {
@@ -25,8 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
       a.href = story.url;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
+
+      const image = story.imgUrl
+        ? `<img class="story-thumb" src="${story.imgUrl}" alt="" loading="lazy" />`
+        : '';
+
       a.innerHTML = `
         <div class="story-inner">
+          ${image}
           <div class="story-text">
             <p class="story-pub"></p>
             <p class="story-title"></p>
@@ -60,9 +84,36 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       const trigger = section.querySelector('.content-group-trigger');
       const body = section.querySelector('.content-group-body');
+      const initialCount = 4;
+      let expanded = false;
 
       if (groupStories.length) {
-        groupStories.forEach(story => body.appendChild(makeStoryLink(story)));
+        const storyList = document.createElement('div');
+        storyList.className = 'content-story-list';
+        groupStories.forEach((story, index) => {
+          const item = makeStoryLink(story);
+          if (index >= initialCount) item.hidden = true;
+          storyList.appendChild(item);
+        });
+        body.appendChild(storyList);
+
+        if (groupStories.length > initialCount) {
+          const loadMore = document.createElement('button');
+          loadMore.className = 'content-load-more';
+          loadMore.type = 'button';
+          loadMore.textContent = `Load more (${groupStories.length - initialCount})`;
+          loadMore.setAttribute('aria-expanded', 'false');
+          loadMore.addEventListener('click', event => {
+            event.stopPropagation();
+            expanded = !expanded;
+            storyList.querySelectorAll('.content-story').forEach((item, index) => {
+              item.hidden = !expanded && index >= initialCount;
+            });
+            loadMore.textContent = expanded ? 'Show fewer' : `Load more (${groupStories.length - initialCount})`;
+            loadMore.setAttribute('aria-expanded', String(expanded));
+          });
+          body.appendChild(loadMore);
+        }
       } else {
         const empty = document.createElement('p');
         empty.className = 'content-group-placeholder';
