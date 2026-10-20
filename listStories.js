@@ -13,14 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.createElement('div');
     layout.className = 'content-layout';
 
-    const intro = document.createElement('div');
-    intro.className = 'content-intro';
-    intro.innerHTML = `
-      <p class="content-kicker">SELECTED WORK</p>
-      <h2 class="content-heading">Editorial &amp; search strategy</h2>
-      <p class="content-summary">Content built for people, search engines and the evolving world of AI discovery.</p>
-    `;
-    layout.appendChild(intro);
 
     const groups = [
       {
