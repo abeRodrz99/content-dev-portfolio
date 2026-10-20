@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       a.rel = 'noopener noreferrer';
       a.innerHTML = `
         <div class="story-inner">
-          <img class="story-thumb" src="${project.imgUrl}" alt="${project.title}" loading="lazy" />
+          ${project.imgUrl ? `<img class="story-thumb" src="${project.imgUrl}" alt="${project.title}" loading="lazy" />` : ""}
           <div class="story-text">
             <p class="story-title">${project.title}</p>
             <p class="story-excerpt">${project.description}</p>
