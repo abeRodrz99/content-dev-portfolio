@@ -14,33 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     layout.className = 'content-layout';
 
     const groups = [
-      {
-        id: 'seo-geo',
-        number: '01',
-        title: 'SEO & Generative Engine Optimization',
-        description: 'Search strategy, evergreen content and AI search visibility.',
-        category: 'SEO & GEO',
-        primary: true
-      },
-      {
-        id: 'investigative',
-        number: '02',
-        title: 'Investigative Reporting',
-        description: 'Original research, accountability and deep-dive reporting.',
-        category: 'Investigative Reporting',
-        primary: false
-      },
-      {
-        id: 'general-reporting',
-        number: '03',
-        title: 'General Reporting',
-        description: 'News, interviews, explainers and broader editorial coverage.',
-        category: 'General Reporting',
-        primary: false
-      }
+      { number: '01', title: 'SEO & Generative Engine Optimization', description: 'Search strategy, evergreen content and AI search visibility.', category: 'SEO & GEO', primary: true },
+      { number: '02', title: 'Investigative & Accountability Reporting', description: 'Original research, accountability and deep-dive reporting.', category: 'Investigative & Accountability Reporting', primary: false },
+      { number: '03', title: 'General & Feature Reporting', description: 'News, interviews, profiles and broader editorial coverage.', category: 'General & Feature Reporting', primary: false }
     ];
 
-    function createStoryLink(story) {
+    function makeStoryLink(story) {
       const a = document.createElement('a');
       a.className = 'story-item content-story';
       a.href = story.url;
@@ -79,18 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
         </button>
         <div class="content-group-body"${group.primary ? '' : ' hidden'}></div>
       `;
-
+      const trigger = section.querySelector('.content-group-trigger');
       const body = section.querySelector('.content-group-body');
+
       if (groupStories.length) {
-        groupStories.forEach(story => body.appendChild(createStoryLink(story)));
+        groupStories.forEach(story => body.appendChild(makeStoryLink(story)));
       } else {
         const empty = document.createElement('p');
         empty.className = 'content-group-placeholder';
-        empty.textContent = 'Selected work coming soon.';
+        empty.textContent = 'No stories in this section yet.';
         body.appendChild(empty);
       }
 
-      const trigger = section.querySelector('.content-group-trigger');
       trigger.addEventListener('click', () => {
         const open = trigger.getAttribute('aria-expanded') === 'true';
         trigger.setAttribute('aria-expanded', String(!open));
