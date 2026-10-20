@@ -12,5 +12,12 @@
         "url": "https://fluence-app-rho.vercel.app/",
         "tech": ["React", "Tailwind CSS"],
         "imgUrl": "https://i.postimg.cc/qvkt741c/Screenshot-2026-09-02-200649.png"
-    }  
+    },
+    {
+        "title": "Runner Tools",
+        "description": "A collection of practical running tools for calculating pace, planning race strategies, and making training decisions.",
+        "url": "https://runner-site-neon.vercel.app/",
+        "tech": ["React", "JavaScript"],
+        "imgUrl": "https://runner-site-neon.vercel.app/"
+    }
 ]
