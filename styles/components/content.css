@@ -326,7 +326,6 @@
   flex: 0 0 88px;
   background: var(--surface);
 }
-.content-story + .content-story { border-top: 1px solid var(--border, #e5e5e5); }
 .content-story .story-inner { align-items: center; gap: 12px; }
 .content-story .story-pub { margin-bottom: 4px; }
 .content-story .story-title {
@@ -379,4 +378,21 @@
     flex-basis: 68px;
   }
   .content-group-description { max-width: 100%; }
+}
+
+
+/* Keep story and project rows visually consistent across the two tabs. */
+.content-story,
+.project-expandable {
+  border-radius: 8px;
+  transition: background-color 0.18s ease;
+}
+.content-story + .content-story { border-top: 0; }
+.content-story:hover,
+.project-expandable:not(.is-expanded):hover {
+  background: var(--surface);
+}
+.project-expandable.is-expanded {
+  border-radius: 8px;
+  background: var(--surface);
 }
