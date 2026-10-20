@@ -185,3 +185,21 @@
   .project-trigger .story-arrow { transition: none; }
 }
 
+/* Keep the expanded project visually grouped as one card. */
+.project-expandable.is-expanded {
+  background: var(--surface);
+}
+
+.project-expandable.is-expanded .project-details {
+  padding-top: 10px;
+  padding-bottom: 14px;
+}
+
+.project-expandable.is-expanded .project-details-copy {
+  max-width: 620px;
+}
+
+.project-expandable.is-expanded .project-trigger .story-arrow {
+  transform: rotate(180deg);
+}
+
