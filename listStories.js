@@ -54,12 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     projectsToShow.forEach(project => {
-      const a = document.createElement('a');
-      a.className = 'story-item';
-      a.href = project.url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.innerHTML = `
+      const isRunnerTools = project.title === 'Runner Tools';
+      const item = document.createElement(isRunnerTools ? 'div' : 'a');
+      item.className = isRunnerTools ? 'story-item project-item project-expandable' : 'story-item';
+      if (!isRunnerTools) {
+        item.href = project.url;
+        item.target = '_blank';
+        item.rel = 'noopener noreferrer';
+      }
+
+      const inner = `
         <div class="story-inner">
           ${project.imgUrl ? `<img class="story-thumb" src="${project.imgUrl}" alt="${project.title}" loading="lazy" />` : ""}
           <div class="story-text">
@@ -67,10 +71,37 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="story-excerpt">${project.description}</p>
             <p class="story-pub">${project.tech.join(' · ')}</p>
           </div>
-          <span class="story-arrow">→</span>
+          <span class="story-arrow" aria-hidden="true">${isRunnerTools ? '＋' : '→'}</span>
         </div>
       `;
-      container.appendChild(a);
+
+      if (isRunnerTools) {
+        item.innerHTML = `
+          <button class="project-trigger" type="button" aria-expanded="false">
+            ${inner}
+          </button>
+          <div class="project-details" hidden>
+            <p class="project-details-copy">Runner Tools is a growing collection of practical, no-nonsense tools built for runners. It brings pace calculations, race strategy planning, distance conversions and other training utilities into one simple place.</p>
+            <a class="project-visit-button" href="${project.url}" target="_blank" rel="noopener noreferrer">View site <span aria-hidden="true">↗</span></a>
+          </div>
+        `;
+
+        const trigger = item.querySelector('.project-trigger');
+        const details = item.querySelector('.project-details');
+        const arrow = item.querySelector('.story-arrow');
+
+        trigger.addEventListener('click', () => {
+          const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', String(!isOpen));
+          details.hidden = isOpen;
+          item.classList.toggle('is-expanded', !isOpen);
+          arrow.textContent = isOpen ? '＋' : '−';
+        });
+      } else {
+        item.innerHTML = inner;
+      }
+
+      container.appendChild(item);
     });
 
     initAnimatedList();
