@@ -8,36 +8,126 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Render stories (Content tab) ──
   function renderStories(storiesToShow) {
-    container.querySelectorAll('.story-item, .empty-state').forEach(el => el.remove());
+    container.querySelectorAll('.story-item, .empty-state, .content-layout').forEach(el => el.remove());
 
-    if (storiesToShow.length === 0) {
-      const empty = document.createElement('p');
-      empty.className = 'empty-state';
-      empty.textContent = 'No stories in this category yet.';
-      container.appendChild(empty);
-      return;
-    }
+    const layout = document.createElement('div');
+    layout.className = 'content-layout';
+
+    const intro = document.createElement('div');
+    intro.className = 'content-intro';
+    intro.innerHTML = `
+      <p class="content-kicker">SELECTED WORK</p>
+      <h2 class="content-heading">Editorial &amp; search strategy</h2>
+      <p class="content-summary">Content built for people, search engines and the evolving world of AI discovery.</p>
+    `;
+    layout.appendChild(intro);
+
+    const groups = [
+      {
+        id: 'seo-geo',
+        number: '01',
+        title: 'SEO & Generative Engine Optimization',
+        description: 'Search strategy, evergreen content and AI search visibility.',
+        primary: true,
+        stories: []
+      },
+      {
+        id: 'investigative',
+        number: '02',
+        title: 'Investigative Reporting',
+        description: 'Original research, accountability and deep-dive reporting.',
+        primary: false,
+        stories: []
+      },
+      {
+        id: 'general-reporting',
+        number: '03',
+        title: 'General Reporting',
+        description: 'News, interviews, explainers and broader editorial coverage.',
+        primary: false,
+        stories: []
+      }
+    ];
+
+    // Keep every existing article intact and visible until the user assigns pieces to specialties.
+    const unassigned = document.createElement('section');
+    unassigned.className = 'content-group content-unassigned';
+    unassigned.innerHTML = `
+      <button class="content-group-trigger" type="button" aria-expanded="true">
+        <span class="content-group-heading">
+          <span class="content-group-number">—</span>
+          <span class="content-group-title-wrap">
+            <span class="content-group-title">All published work</span>
+            <span class="content-group-description">Articles are preserved here until you decide which specialty each belongs in.</span>
+          </span>
+        </span>
+        <span class="content-group-icon" aria-hidden="true">−</span>
+      </button>
+      <div class="content-group-body"></div>
+    `;
+    const unassignedTrigger = unassigned.querySelector('.content-group-trigger');
+    const unassignedBody = unassigned.querySelector('.content-group-body');
+    unassignedTrigger.addEventListener('click', () => {
+      const open = unassignedTrigger.getAttribute('aria-expanded') === 'true';
+      unassignedTrigger.setAttribute('aria-expanded', String(!open));
+      unassignedBody.hidden = open;
+      unassigned.classList.toggle('is-open', !open);
+      unassigned.querySelector('.content-group-icon').textContent = open ? '+' : '−';
+    });
 
     storiesToShow.forEach(story => {
       const a = document.createElement('a');
-      a.className = 'story-item';
+      a.className = 'story-item content-story';
       a.href = story.url;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
       a.innerHTML = `
         <div class="story-inner">
-          <img class="story-thumb" src="${story.imgUrl}" alt="${story.title}" loading="lazy" />
           <div class="story-text">
             <p class="story-pub">${story.publication}</p>
-            <p class="story-title">${story.title}</p>
-            <p class="story-excerpt">${story.excerpt}</p>
+            <p class="story-title"></p>
+            <p class="story-excerpt"></p>
           </div>
-          <span class="story-arrow">→</span>
+          <span class="story-arrow" aria-hidden="true">↗</span>
         </div>
       `;
-      container.appendChild(a);
+      a.querySelector('.story-title').textContent = story.title;
+      a.querySelector('.story-excerpt').textContent = story.excerpt;
+      unassignedBody.appendChild(a);
     });
 
+    groups.forEach(group => {
+      const section = document.createElement('section');
+      section.className = `content-group${group.primary ? ' content-group-primary is-open' : ''}`;
+      section.innerHTML = `
+        <button class="content-group-trigger" type="button" aria-expanded="${group.primary ? 'true' : 'false'}">
+          <span class="content-group-heading">
+            <span class="content-group-number">${group.number}</span>
+            <span class="content-group-title-wrap">
+              <span class="content-group-title">${group.title}</span>
+              <span class="content-group-description">${group.description}</span>
+            </span>
+          </span>
+          <span class="content-group-icon" aria-hidden="true">${group.primary ? '−' : '+'}</span>
+        </button>
+        <div class="content-group-body"${group.primary ? '' : ' hidden'}>
+          <p class="content-group-placeholder">We’ll add selected articles here once you decide which pieces belong in this specialty.</p>
+        </div>
+      `;
+      const trigger = section.querySelector('.content-group-trigger');
+      const body = section.querySelector('.content-group-body');
+      trigger.addEventListener('click', () => {
+        const open = trigger.getAttribute('aria-expanded') === 'true';
+        trigger.setAttribute('aria-expanded', String(!open));
+        body.hidden = open;
+        section.classList.toggle('is-open', !open);
+        section.querySelector('.content-group-icon').textContent = open ? '+' : '−';
+      });
+      layout.appendChild(section);
+    });
+
+    layout.appendChild(unassigned);
+    container.appendChild(layout);
     initAnimatedList();
   }
 
