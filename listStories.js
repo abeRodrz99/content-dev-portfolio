@@ -13,61 +13,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.createElement('div');
     layout.className = 'content-layout';
 
-
     const groups = [
       {
         id: 'seo-geo',
         number: '01',
         title: 'SEO & Generative Engine Optimization',
         description: 'Search strategy, evergreen content and AI search visibility.',
-        primary: true,
-        stories: []
+        category: 'SEO & GEO',
+        primary: true
       },
       {
         id: 'investigative',
         number: '02',
         title: 'Investigative Reporting',
         description: 'Original research, accountability and deep-dive reporting.',
-        primary: false,
-        stories: []
+        category: 'Investigative Reporting',
+        primary: false
       },
       {
         id: 'general-reporting',
         number: '03',
         title: 'General Reporting',
         description: 'News, interviews, explainers and broader editorial coverage.',
-        primary: false,
-        stories: []
+        category: 'General Reporting',
+        primary: false
       }
     ];
 
-    // Keep every existing article intact and visible until the user assigns pieces to specialties.
-    const unassigned = document.createElement('section');
-    unassigned.className = 'content-group content-unassigned';
-    unassigned.innerHTML = `
-      <button class="content-group-trigger" type="button" aria-expanded="true">
-        <span class="content-group-heading">
-          <span class="content-group-number">—</span>
-          <span class="content-group-title-wrap">
-            <span class="content-group-title">All published work</span>
-            <span class="content-group-description">Articles are preserved here until you decide which specialty each belongs in.</span>
-          </span>
-        </span>
-        <span class="content-group-icon" aria-hidden="true">−</span>
-      </button>
-      <div class="content-group-body"></div>
-    `;
-    const unassignedTrigger = unassigned.querySelector('.content-group-trigger');
-    const unassignedBody = unassigned.querySelector('.content-group-body');
-    unassignedTrigger.addEventListener('click', () => {
-      const open = unassignedTrigger.getAttribute('aria-expanded') === 'true';
-      unassignedTrigger.setAttribute('aria-expanded', String(!open));
-      unassignedBody.hidden = open;
-      unassigned.classList.toggle('is-open', !open);
-      unassigned.querySelector('.content-group-icon').textContent = open ? '+' : '−';
-    });
-
-    storiesToShow.forEach(story => {
+    function createStoryLink(story) {
       const a = document.createElement('a');
       a.className = 'story-item content-story';
       a.href = story.url;
@@ -76,19 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
       a.innerHTML = `
         <div class="story-inner">
           <div class="story-text">
-            <p class="story-pub">${story.publication}</p>
+            <p class="story-pub"></p>
             <p class="story-title"></p>
             <p class="story-excerpt"></p>
           </div>
           <span class="story-arrow" aria-hidden="true">↗</span>
         </div>
       `;
+      a.querySelector('.story-pub').textContent = story.publication;
       a.querySelector('.story-title').textContent = story.title;
       a.querySelector('.story-excerpt').textContent = story.excerpt;
-      unassignedBody.appendChild(a);
-    });
+      return a;
+    }
 
     groups.forEach(group => {
+      const groupStories = storiesToShow.filter(story => story.category === group.category);
       const section = document.createElement('section');
       section.className = `content-group${group.primary ? ' content-group-primary is-open' : ''}`;
       section.innerHTML = `
@@ -102,12 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
           </span>
           <span class="content-group-icon" aria-hidden="true">${group.primary ? '−' : '+'}</span>
         </button>
-        <div class="content-group-body"${group.primary ? '' : ' hidden'}>
-          <p class="content-group-placeholder">We’ll add selected articles here once you decide which pieces belong in this specialty.</p>
-        </div>
+        <div class="content-group-body"${group.primary ? '' : ' hidden'}></div>
       `;
-      const trigger = section.querySelector('.content-group-trigger');
+
       const body = section.querySelector('.content-group-body');
+      if (groupStories.length) {
+        groupStories.forEach(story => body.appendChild(createStoryLink(story)));
+      } else {
+        const empty = document.createElement('p');
+        empty.className = 'content-group-placeholder';
+        empty.textContent = 'Selected work coming soon.';
+        body.appendChild(empty);
+      }
+
+      const trigger = section.querySelector('.content-group-trigger');
       trigger.addEventListener('click', () => {
         const open = trigger.getAttribute('aria-expanded') === 'true';
         trigger.setAttribute('aria-expanded', String(!open));
@@ -118,14 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
       layout.appendChild(section);
     });
 
-    layout.appendChild(unassigned);
     container.appendChild(layout);
     initAnimatedList();
   }
 
   // ── Render dev projects (Dev tab) ──
   function renderDevProjects(projectsToShow) {
-    container.querySelectorAll('.story-item, .empty-state').forEach(el => el.remove());
+    container.querySelectorAll('.story-item, .empty-state, .content-layout').forEach(el => el.remove());
 
     if (projectsToShow.length === 0) {
       const empty = document.createElement('p');
@@ -143,18 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="project-trigger" type="button" aria-expanded="false">
           <div class="story-inner">
             <div class="story-text">
-              <p class="story-title">${project.title}</p>
-              <p class="story-excerpt">${project.description}</p>
-              <p class="story-pub">${project.tech.join(' · ')}</p>
+              <p class="story-title"></p>
+              <p class="story-excerpt"></p>
+              <p class="story-pub"></p>
             </div>
             <span class="story-arrow" aria-hidden="true">＋</span>
           </div>
         </button>
         <div class="project-details" hidden>
-          <p class="project-details-copy">${project.description}</p>
-          <a class="project-visit-button" href="${project.url}" target="_blank" rel="noopener noreferrer">View site <span aria-hidden="true">↗</span></a>
+          <p class="project-details-copy"></p>
+          <a class="project-visit-button" href="" target="_blank" rel="noopener noreferrer">View site <span aria-hidden="true">↗</span></a>
         </div>
       `;
+      item.querySelector('.story-title').textContent = project.title;
+      item.querySelector('.story-excerpt').textContent = project.description;
+      item.querySelector('.story-pub').textContent = project.tech.join(' · ');
+      item.querySelector('.project-details-copy').textContent = project.description;
+      item.querySelector('.project-visit-button').href = project.url;
 
       const trigger = item.querySelector('.project-trigger');
       const details = item.querySelector('.project-details');
@@ -216,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(([stories, devProjects]) => {
       allStories     = stories;
       allDevProjects = devProjects;
-      renderStories(allStories); // default to Content tab on load
+      renderStories(allStories);
     })
     .catch(err => {
       console.error('Error fetching data:', err);
