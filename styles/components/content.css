@@ -203,3 +203,23 @@
   transform: rotate(180deg);
 }
 
+/* Expanded state: turn the project row into a compact heading, not a duplicate preview. */
+.project-expandable.is-expanded .project-trigger .story-excerpt,
+.project-expandable.is-expanded .project-trigger .story-pub {
+  display: none;
+}
+
+.project-expandable.is-expanded .project-trigger .story-inner {
+  align-items: center;
+}
+
+.project-expandable.is-expanded .project-trigger .story-title {
+  margin-bottom: 0;
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.project-expandable.is-expanded .project-trigger {
+  padding-bottom: 2px;
+}
+
