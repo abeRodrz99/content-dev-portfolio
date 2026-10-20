@@ -179,6 +179,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       trigger.addEventListener('click', () => {
         const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Keep only one project expanded at a time.
+        container.querySelectorAll('.project-expandable.is-expanded').forEach(openItem => {
+          if (openItem === item) return;
+          openItem.classList.remove('is-expanded');
+          const openTrigger = openItem.querySelector('.project-trigger');
+          const openDetails = openItem.querySelector('.project-details');
+          const openArrow = openItem.querySelector('.story-arrow');
+          if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
+          if (openDetails) openDetails.hidden = true;
+          if (openArrow) openArrow.textContent = '＋';
+        });
+
         trigger.setAttribute('aria-expanded', String(!isOpen));
         details.hidden = isOpen;
         item.classList.toggle('is-expanded', !isOpen);
