@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="story-title"></p>
             <p class="story-excerpt"></p>
           </div>
-          <span class="story-arrow" aria-hidden="true">↗</span>
+
         </div>
       `;
       a.querySelector('.story-pub').textContent = story.publication;
