@@ -297,8 +297,8 @@
   font-size: 18px;
   text-align: center;
 }
-.content-group-primary .content-group-title { font-size: 17px; }
-.content-group-primary .content-group-number { color: var(--text-primary); }
+.content-group-primary .content-group-title { font-size: 15px; }
+.content-group-primary .content-group-number { color: var(--text-tertiary); }
 .content-group-body { padding: 0 0 16px 36px; }
 .content-group-body[hidden] { display: none; }
 .content-group-placeholder {
