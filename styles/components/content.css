@@ -130,11 +130,6 @@
 
 .project-trigger .story-arrow {
   font-size: 20px;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.project-expandable.is-expanded .story-arrow {
-  transform: rotate(180deg);
 }
 
 .project-details {
@@ -179,7 +174,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .project-details { animation: none; }
-  .project-trigger .story-arrow { transition: none; }
+
 }
 
 /* Keep the expanded project visually grouped as one card. */
@@ -196,9 +191,7 @@
   max-width: 620px;
 }
 
-.project-expandable.is-expanded .project-trigger .story-arrow {
-  transform: rotate(180deg);
-}
+
 
 /* Expanded state: turn the project row into a compact heading, not a duplicate preview. */
 .project-expandable.is-expanded .project-trigger .story-excerpt,
@@ -291,11 +284,21 @@
   font-size: 12px;
   line-height: 1.5;
 }
+.content-group-icon,
+.project-trigger .story-arrow {
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
 .content-group-icon {
   flex: 0 0 18px;
   color: var(--text-tertiary);
   font-size: 18px;
   text-align: center;
+}
+
+.content-group.is-open .content-group-icon,
+.project-expandable.is-expanded .project-trigger .story-arrow {
+  transform: scale(1.08);
 }
 .content-group-primary .content-group-title { font-size: 15px; }
 .content-group-primary .content-group-number { color: var(--text-tertiary); }
