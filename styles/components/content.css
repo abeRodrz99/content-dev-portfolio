@@ -286,7 +286,7 @@
 }
 .content-group-icon,
 .project-trigger .story-arrow {
-  transition: transform 0.18s ease, color 0.18s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .content-group-icon {
@@ -298,7 +298,7 @@
 
 .content-group.is-open .content-group-icon,
 .project-expandable.is-expanded .project-trigger .story-arrow {
-  transform: scale(1.08);
+  transform: rotate(180deg);
 }
 .content-group-primary .content-group-title { font-size: 15px; }
 .content-group-primary .content-group-number { color: var(--text-tertiary); }
