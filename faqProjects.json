@@ -37,12 +37,19 @@
       ]
     },
     {
-      "company": "Bankrate",
-      "title": "What's It Like to Work at Bankrate?",
-      "angle": "A fintech and media brand's values and employee investment, from leadership development to listening programs and AI enablement.",
-      "base": "https://builtin.com/company/bankratecom/faq/",
+      "company": "Spectrum",
+      "title": "What's It Like to Work at Spectrum?",
+      "angle": "A large connectivity company where the employee story centers on career growth, job stability, benefits and pay.",
+      "base": "https://builtin.com/company/spectrum-0/faq/",
       "faqs": [
-        "workplace-perception"
+        "workplace-perception",
+        "culture-values",
+        "career-growth-development",
+        "compensation-benefits",
+        "work-life-balance-wellbeing",
+        "leadership-management",
+        "innovation-technology-agility",
+        "stability-growth"
       ]
     },
     {
