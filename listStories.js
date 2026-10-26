@@ -5,10 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const filters   = document.querySelectorAll('.filter-btn');
   let allStories     = [];
   let allDevProjects = [];
+  let faqData        = null;
+
+  const CLEAR_SELECTOR = '.story-item, .empty-state, .content-layout, .faq-layout';
 
   // ── Render stories (Content tab) ──
   function renderStories(storiesToShow) {
-    container.querySelectorAll('.story-item, .empty-state, .content-layout').forEach(el => el.remove());
+    container.querySelectorAll(CLEAR_SELECTOR).forEach(el => el.remove());
 
     const layout = document.createElement('div');
     layout.className = 'content-layout';
@@ -137,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Render dev projects (Dev tab) ──
   function renderDevProjects(projectsToShow) {
-    container.querySelectorAll('.story-item, .empty-state, .content-layout').forEach(el => el.remove());
+    container.querySelectorAll(CLEAR_SELECTOR).forEach(el => el.remove());
 
     if (projectsToShow.length === 0) {
       const empty = document.createElement('p');
@@ -204,6 +207,69 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimatedList();
   }
 
+  // ── Render SEO & AEO FAQ project (FAQ tab) ──
+  function renderFaqProject(data) {
+    container.querySelectorAll(CLEAR_SELECTOR).forEach(el => el.remove());
+
+    const layout = document.createElement('div');
+    layout.className = 'faq-layout';
+
+    const { intro, pages } = data;
+
+    const intro_el = document.createElement('div');
+    intro_el.className = 'faq-intro';
+    intro_el.innerHTML = `
+      <p class="faq-kicker"></p>
+      <h4 class="faq-heading"></h4>
+      <p class="faq-summary"></p>
+      <div class="faq-block">
+        <p class="faq-block-label">The goal</p>
+        <p class="faq-block-copy faq-goal"></p>
+      </div>
+      <div class="faq-block">
+        <p class="faq-block-label">What I did</p>
+        <ul class="faq-work-list"></ul>
+      </div>
+      <p class="faq-examples-label">Live examples</p>
+    `;
+    intro_el.querySelector('.faq-kicker').textContent = intro.kicker;
+    intro_el.querySelector('.faq-heading').textContent = intro.title;
+    intro_el.querySelector('.faq-summary').textContent = intro.summary;
+    intro_el.querySelector('.faq-goal').textContent = intro.goal;
+    const list = intro_el.querySelector('.faq-work-list');
+    intro.work.forEach(point => {
+      const li = document.createElement('li');
+      li.textContent = point;
+      list.appendChild(li);
+    });
+    layout.appendChild(intro_el);
+
+    pages.forEach(page => {
+      const a = document.createElement('a');
+      a.className = 'story-item faq-page';
+      a.href = page.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.innerHTML = `
+        <div class="story-inner">
+          <div class="story-text">
+            <p class="story-pub"></p>
+            <p class="story-title"></p>
+            <p class="story-excerpt"></p>
+          </div>
+          <span class="story-arrow" aria-hidden="true">↗</span>
+        </div>
+      `;
+      a.querySelector('.story-pub').textContent = page.company;
+      a.querySelector('.story-title').textContent = page.title;
+      a.querySelector('.story-excerpt').textContent = page.angle;
+      layout.appendChild(a);
+    });
+
+    container.appendChild(layout);
+    initAnimatedList();
+  }
+
   // ── Animated sliding background ──
   function initAnimatedList() {
     container.querySelectorAll('.story-item').forEach(item => {
@@ -224,15 +290,18 @@ document.addEventListener('DOMContentLoaded', () => {
       filters.forEach(f => f.classList.remove('active'));
       filter.classList.add('active');
 
-      if (filter.dataset.filter === 'content') {
+      const tab = filter.dataset.filter;
+      if (tab === 'content') {
         renderStories(allStories);
+      } else if (tab === 'faq') {
+        renderFaqProject(faqData);
       } else {
         renderDevProjects(allDevProjects);
       }
     });
   });
 
-  // ── Fetch both JSON files in parallel ──
+  // ── Fetch all JSON files in parallel ──
   Promise.all([
     fetch('stories.json').then(res => {
       if (!res.ok) throw new Error('Could not load stories.json');
@@ -242,10 +311,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error('Could not load devProjects.json');
       return res.json();
     }),
+    fetch('faqProjects.json').then(res => {
+      if (!res.ok) throw new Error('Could not load faqProjects.json');
+      return res.json();
+    }),
   ])
-    .then(([stories, devProjects]) => {
+    .then(([stories, devProjects, faq]) => {
       allStories     = stories;
       allDevProjects = devProjects;
+      faqData        = faq;
       renderStories(allStories);
     })
     .catch(err => {
