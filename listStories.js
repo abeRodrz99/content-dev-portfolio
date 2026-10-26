@@ -18,24 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const groups = [
       {
-        number: '01',
         title: 'SEO Content',
         description: 'Industry roundups designed to earn search visibility. Built In clients opted into these listicles to get in front of audiences searching their market, each one structured around the queries people actually use.',
         category: 'SEO & GEO',
         primary: true
       },
       {
-        number: '02',
-        title: 'Investigative & Accountability Reporting',
-        description: 'Evidence-led reporting on public institutions and unequal outcomes, using records, data and on-the-ground reporting to examine who is affected and why.',
-        category: 'Investigative & Accountability Reporting',
+        title: 'General Reporting',
+        description: 'Profiles, community reporting and industry stories that bring people’s experiences, local context and emerging trends into focus.',
+        category: 'General & Feature Reporting',
         primary: false
       },
       {
-        number: '03',
-        title: 'General & Feature Reporting',
-        description: 'Profiles, community reporting and industry stories that bring people’s experiences, local context and emerging trends into focus.',
-        category: 'General & Feature Reporting',
+        title: 'Investigative Reporting',
+        description: 'Evidence-led reporting on public institutions and unequal outcomes, using records, data and on-the-ground reporting to examine who is affected and why.',
+        category: 'Investigative & Accountability Reporting',
         primary: false
       }
     ];
@@ -75,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
       section.innerHTML = `
         <button class="content-group-trigger" type="button" aria-expanded="${group.primary ? 'true' : 'false'}">
           <span class="content-group-heading">
-            <span class="content-group-number">${group.number}</span>
             <span class="content-group-title-wrap">
               <span class="content-group-title">${group.title}</span>
               <span class="content-group-description">${group.description}</span>
@@ -126,6 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       trigger.addEventListener('click', () => {
         const open = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Accordion: opening one subject collapses whichever other one is open.
+        layout.querySelectorAll('.content-group.is-open').forEach(other => {
+          if (other === section) return;
+          other.classList.remove('is-open');
+          other.querySelector('.content-group-trigger').setAttribute('aria-expanded', 'false');
+          other.querySelector('.content-group-body').hidden = true;
+          other.querySelector('.content-group-icon').textContent = '+';
+        });
+
         trigger.setAttribute('aria-expanded', String(!open));
         body.hidden = open;
         section.classList.toggle('is-open', !open);
