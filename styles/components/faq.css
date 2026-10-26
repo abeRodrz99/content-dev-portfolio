@@ -1,33 +1,5 @@
-/* ── AEO FAQ TAB ── */
-.faq-layout { position: relative; z-index: 1; }
-
-.faq-intro { padding: 4px 0 24px; }
-
-.faq-kicker {
-  margin: 0 0 8px;
-  color: var(--text-tertiary);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.faq-heading {
-  margin: 0 0 8px;
-  color: var(--text-primary);
-  font-size: clamp(20px, 4vw, 24px);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-}
-
-.faq-summary {
-  margin: 0 0 20px;
-  max-width: 520px;
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.65;
-}
+/* ── AEO TAB (goal / work blocks and company rows inside accordion groups) ── */
+.faq-intro { padding: 2px 0 0; }
 
 .faq-block { margin: 0 0 18px; }
 
@@ -209,8 +181,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   .faq-company-details { animation: none; }
-}
-
-@media (max-width: 480px) {
-  .faq-intro { padding-bottom: 18px; }
 }
