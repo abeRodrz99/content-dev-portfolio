@@ -132,10 +132,13 @@
   flex-shrink: 0;
   font-size: 20px;
   color: var(--text-tertiary);
-  transition: color 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .faq-company:hover .faq-company-arrow { color: var(--text-secondary); }
+
+/* Same flip animation as the other tabs when a row opens. */
+.faq-company.is-open .faq-company-arrow { transform: rotate(180deg); }
 
 .faq-company-details {
   padding: 12px 24px 6px 0;
