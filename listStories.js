@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const groups = [
       {
         number: '01',
-        title: 'SEO & Generative Engine Optimization',
-        description: 'Search-focused explainers, evergreen guides and topic-led content designed to answer real questions and help audiences discover useful information.',
+        title: 'SEO Content',
+        description: 'Search-first content designed to get found. Industry listicles that Built In clients opted into to grow their search visibility, alongside evergreen explainers and guides built around the questions audiences actually search.',
         category: 'SEO & GEO',
         primary: true
       },
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimatedList();
   }
 
-  // ── Render SEO & AEO FAQ project (FAQ tab) ──
+  // ── Render AEO FAQ project (FAQ tab) ──
   function renderFaqProject(data) {
     container.querySelectorAll(CLEAR_SELECTOR).forEach(el => el.remove());
 
