@@ -12,7 +12,7 @@ const bioData = {
     I specialize in crafting search-optimized content that helps brands grow their
     reach and connect with the right audiences.`,
   links: [
-    { label: 'Résumé',        href: 'https://docs.google.com/document/d/1IRCud1n9bIpWrg_Cdb805QU_5mVFtTHnvhCTkAM0vdM/edit?usp=sharing' },
+    { label: 'Resume',        href: 'https://docs.google.com/document/d/1IRCud1n9bIpWrg_Cdb805QU_5mVFtTHnvhCTkAM0vdM/edit?usp=sharing' },
     { label: 'LinkedIn',      href: 'https://www.linkedin.com/in/abel-rodriguez-782b33175/' },
   ],
 };
