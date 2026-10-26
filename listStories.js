@@ -347,7 +347,11 @@ document.addEventListener('DOMContentLoaded', () => {
       allStories     = stories;
       allDevProjects = devProjects;
       faqData        = faq;
-      renderStories(allStories);
+      // Render whichever tab is selected by default (first tab in index.html).
+      const defaultTab = currentTab().dataset.filter;
+      if (defaultTab === 'faq') renderFaqProject(faqData);
+      else if (defaultTab === 'dev') renderDevProjects(allDevProjects);
+      else renderStories(allStories);
     })
     .catch(err => {
       console.error('Error fetching data:', err);
