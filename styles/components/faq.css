@@ -68,21 +68,144 @@
   text-transform: uppercase;
 }
 
-.faq-page {
-  padding: 13px 10px;
+/* ── Expandable company rows ── */
+.faq-company {
   margin: 0 -10px;
+  padding: 13px 10px;
   border-radius: 8px;
   transition: background-color 0.18s ease;
 }
 
-.faq-page:hover { background: var(--surface); }
+.faq-company:not(.is-open):hover,
+.faq-company.is-open { background: var(--surface); }
 
-.faq-page .story-inner { align-items: center; }
+.faq-company-trigger {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
 
-.faq-page .story-title {
-  display: block;
-  overflow: visible;
-  -webkit-line-clamp: unset;
+.faq-company-trigger:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.faq-company-text { flex: 1; min-width: 0; }
+
+.faq-company-pub {
+  margin-bottom: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.faq-company-count { font-weight: 400; }
+
+.faq-company-title {
+  margin-bottom: 4px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.faq-company-angle {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.faq-company.is-open .faq-company-angle { display: none; }
+.faq-company.is-open .faq-company-title { margin-bottom: 0; }
+
+.faq-company-arrow {
+  flex-shrink: 0;
+  font-size: 20px;
+  color: var(--text-tertiary);
+  transition: color 0.2s ease;
+}
+
+.faq-company:hover .faq-company-arrow { color: var(--text-secondary); }
+
+.faq-company-details {
+  padding: 12px 24px 6px 0;
+  animation: faq-details-in 0.22s ease both;
+}
+
+.faq-company-details[hidden] { display: none; }
+
+.faq-company-copy {
+  max-width: 520px;
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* Plain text list of FAQ pages: hairline rows, arrow appears on hover. */
+.faq-link-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 520px;
+  border-top: 1px solid var(--border);
+}
+
+.faq-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.faq-link svg {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition: opacity 0.2s, transform 0.2s, color 0.2s;
+}
+
+.faq-link:hover { color: var(--text-primary); }
+
+.faq-link:hover svg,
+.faq-link:focus-visible svg {
+  opacity: 1;
+  transform: none;
+  color: var(--text-primary);
+}
+
+.faq-link:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (hover: none) {
+  .faq-link svg { opacity: 1; transform: none; }
+}
+
+@keyframes faq-details-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-company-details { animation: none; }
 }
 
 @media (max-width: 480px) {

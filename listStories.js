@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.createElement('div');
     layout.className = 'faq-layout';
 
-    const { intro, pages } = data;
+    const { intro, topics, companies } = data;
 
     const intro_el = document.createElement('div');
     intro_el.className = 'faq-intro';
@@ -244,30 +244,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     layout.appendChild(intro_el);
 
-    pages.forEach(page => {
-      const a = document.createElement('a');
-      a.className = 'story-item faq-page';
-      a.href = page.url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.innerHTML = `
-        <div class="story-inner">
-          <div class="story-text">
-            <p class="story-pub"></p>
-            <p class="story-title"></p>
-            <p class="story-excerpt"></p>
+    const arrowIcon = `<svg width="11" height="11" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <path d="M3.64645 11.3536C3.45118 11.1583 3.45118 10.8417 3.64645 10.6465L10.2929 4L6 4C5.72386 4 5.5 3.77614 5.5 3.5C5.5 3.22386 5.72386 3 6 3L11.5 3C11.6326 3 11.7598 3.05268 11.8536 3.14645C11.9473 3.24022 12 3.36739 12 3.5L12 9.00001C12 9.27615 11.7761 9.50001 11.5 9.50001C11.2239 9.50001 11 9.27615 11 9.00001V4.70711L4.35355 11.3536C4.15829 11.5488 3.84171 11.5488 3.64645 11.3536Z"
+        fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/>
+    </svg>`;
+
+    companies.forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'faq-company';
+      item.innerHTML = `
+        <button class="faq-company-trigger" type="button" aria-expanded="false">
+          <div class="faq-company-text">
+            <p class="faq-company-pub"><span class="faq-company-name"></span> · <span class="faq-company-count"></span></p>
+            <p class="faq-company-title"></p>
+            <p class="faq-company-angle"></p>
           </div>
-          <span class="story-arrow" aria-hidden="true">↗</span>
+          <span class="faq-company-arrow" aria-hidden="true">＋</span>
+        </button>
+        <div class="faq-company-details" hidden>
+          <p class="faq-company-copy"></p>
+          <div class="faq-link-list"></div>
         </div>
       `;
-      a.querySelector('.story-pub').textContent = page.company;
-      a.querySelector('.story-title').textContent = page.title;
-      a.querySelector('.story-excerpt').textContent = page.angle;
-      layout.appendChild(a);
+      item.querySelector('.faq-company-name').textContent = c.company;
+      item.querySelector('.faq-company-count').textContent =
+        `${c.faqs.length} FAQ page${c.faqs.length === 1 ? '' : 's'}`;
+      item.querySelector('.faq-company-title').textContent = c.title;
+      item.querySelector('.faq-company-angle').textContent = c.angle;
+      item.querySelector('.faq-company-copy').textContent = c.angle;
+
+      const linkList = item.querySelector('.faq-link-list');
+      c.faqs.forEach(slug => {
+        const a = document.createElement('a');
+        a.className = 'faq-link';
+        a.href = c.base + slug;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = `<span class="faq-link-label"></span>${arrowIcon}`;
+        a.querySelector('.faq-link-label').textContent = topics[slug] || slug;
+        linkList.appendChild(a);
+      });
+
+      const trigger = item.querySelector('.faq-company-trigger');
+      const details = item.querySelector('.faq-company-details');
+      const arrow   = item.querySelector('.faq-company-arrow');
+
+      trigger.addEventListener('click', () => {
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Keep only one company expanded at a time.
+        layout.querySelectorAll('.faq-company.is-open').forEach(other => {
+          if (other === item) return;
+          other.classList.remove('is-open');
+          other.querySelector('.faq-company-trigger').setAttribute('aria-expanded', 'false');
+          other.querySelector('.faq-company-details').hidden = true;
+          other.querySelector('.faq-company-arrow').textContent = '＋';
+        });
+
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+        details.hidden = isOpen;
+        item.classList.toggle('is-open', !isOpen);
+        arrow.textContent = isOpen ? '＋' : '−';
+      });
+
+      layout.appendChild(item);
     });
 
     container.appendChild(layout);
-    initAnimatedList();
   }
 
   // ── Animated sliding background ──

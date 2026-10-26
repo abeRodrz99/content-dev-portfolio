@@ -11,30 +11,71 @@
       "Built each page as part of a connected FAQ set covering culture, career growth, compensation, work-life balance and more, linked together for discoverability."
     ]
   },
-  "pages": [
+  "topics": {
+    "workplace-perception": "Workplace Perception",
+    "culture-values": "Culture & Values",
+    "career-growth-development": "Career Growth & Development",
+    "compensation-benefits": "Compensation & Benefits",
+    "work-life-balance-wellbeing": "Work-Life Balance & Wellbeing",
+    "leadership-management": "Leadership & Management",
+    "innovation-technology-agility": "Innovation & Technology",
+    "stability-growth": "Company Growth & Stability"
+  },
+  "companies": [
     {
       "company": "MetLife",
       "title": "What's It Like to Work at MetLife?",
-      "url": "https://builtin.com/company/metlife/faq/workplace-perception",
-      "angle": "Financial services at global scale, with a focus on purpose-driven work, internal mobility and employee-led innovation."
+      "angle": "Financial services at global scale, with a focus on purpose-driven work, internal mobility and employee-led innovation.",
+      "base": "https://builtin.com/company/metlife/faq/",
+      "faqs": [
+        "workplace-perception",
+        "culture-values",
+        "career-growth-development",
+        "compensation-benefits",
+        "work-life-balance-wellbeing",
+        "leadership-management"
+      ]
     },
     {
       "company": "Bankrate",
       "title": "What's It Like to Work at Bankrate?",
-      "url": "https://builtin.com/company/bankratecom/faq/workplace-perception",
-      "angle": "A fintech and media brand's values and employee investment, from leadership development to listening programs and AI enablement."
+      "angle": "A fintech and media brand's values and employee investment, from leadership development to listening programs and AI enablement.",
+      "base": "https://builtin.com/company/bankratecom/faq/",
+      "faqs": [
+        "workplace-perception"
+      ]
     },
     {
       "company": "BAE Systems, Inc.",
       "title": "What's It Like to Work at BAE Systems, Inc.?",
-      "url": "https://builtin.com/company/bae-systems/faq/workplace-perception",
-      "angle": "Defense and aerospace careers framed around mission impact, stability, internal career tools and flexible schedules."
+      "angle": "Defense and aerospace careers framed around mission impact, stability, internal career tools and flexible schedules.",
+      "base": "https://builtin.com/company/bae-systems/faq/",
+      "faqs": [
+        "workplace-perception",
+        "culture-values",
+        "career-growth-development",
+        "compensation-benefits",
+        "work-life-balance-wellbeing",
+        "leadership-management",
+        "innovation-technology-agility",
+        "stability-growth"
+      ]
     },
     {
       "company": "SharkNinja",
       "title": "What's It Like to Work at SharkNinja?",
-      "url": "https://builtin.com/company/sharkninja/faq/workplace-perception",
-      "angle": "A fast-moving consumer products culture built on ownership, cross-functional teamwork and visible product impact."
+      "angle": "A fast-moving consumer products culture built on ownership, cross-functional teamwork and visible product impact.",
+      "base": "https://builtin.com/company/sharkninja/faq/",
+      "faqs": [
+        "workplace-perception",
+        "culture-values",
+        "career-growth-development",
+        "compensation-benefits",
+        "work-life-balance-wellbeing",
+        "leadership-management",
+        "innovation-technology-agility",
+        "stability-growth"
+      ]
     }
   ]
 }
