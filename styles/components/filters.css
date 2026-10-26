@@ -1,33 +1,53 @@
-/* ── FILTERS ── */
+/* ── FILTERS (underline tabs) ── */
 .filter-row {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 22px;
   margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+
+.filter-row::-webkit-scrollbar { display: none; }
 
 .filter-btn {
-  padding: 5px 12px;
-  border-radius: 980px;
-  font-size: 13px;
+  flex-shrink: 0;
+  padding: 0 0 10px;
+  font-size: 14px;
   font-family: var(--font);
-  background: var(--surface);
-  color: var(--text-secondary);
+  background: none;
+  color: var(--text-tertiary);
   border: none;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  text-align: center;        /* ADD THIS — fixes text position jump */
+  white-space: nowrap;
+  transition: color 0.2s;
 }
 
-.filter-btn:hover {
-  background: var(--border);
-  color: var(--text-primary);
+.filter-btn:hover { color: var(--text-secondary); }
+
+.filter-btn[aria-selected="true"] { color: var(--text-primary); }
+
+.filter-btn:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-.filter-btn.active {
+.filter-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  border-radius: 2px;
   background: var(--text-primary);
-  color: var(--bg);
-  font-weight: 500;                    
+  pointer-events: none;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
+@media (prefers-reduced-motion: reduce) {
+  .filter-line { transition: none; }
+}

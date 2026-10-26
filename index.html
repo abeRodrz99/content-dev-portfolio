@@ -28,10 +28,11 @@
   <section class="section fade-up-3">
     <h3 class="section-title">Work</h3>
 
-    <div class="filter-row" id="filter-row">
-      <button class="filter-btn active" data-filter="content">Content</button>
-      <button class="filter-btn" data-filter="faq">SEO &amp; AEO</button>
-      <button class="filter-btn" data-filter="dev">Web Development</button>
+    <div class="filter-row" id="filter-row" role="tablist" aria-label="Work">
+      <button class="filter-btn" role="tab" data-filter="content" aria-selected="true">Content</button>
+      <button class="filter-btn" role="tab" data-filter="faq" aria-selected="false" tabindex="-1">SEO &amp; AEO</button>
+      <button class="filter-btn" role="tab" data-filter="dev" aria-selected="false" tabindex="-1">Web Development</button>
+      <span class="filter-line" id="filter-line" aria-hidden="true"></span>
     </div>
 
     <div class="story-list" id="portfolio-content">

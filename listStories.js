@@ -284,22 +284,49 @@ document.addEventListener('DOMContentLoaded', () => {
     container.addEventListener('mouseleave', () => { bg.style.opacity = '0'; });
   }
 
-  // ── Tab click ──
-  filters.forEach(filter => {
-    filter.addEventListener('click', () => {
-      filters.forEach(f => f.classList.remove('active'));
-      filter.classList.add('active');
+  // ── Tabs: underline indicator, click and keyboard ──
+  const tabLine = document.getElementById('filter-line');
+  const tabList = [...filters];
 
-      const tab = filter.dataset.filter;
-      if (tab === 'content') {
-        renderStories(allStories);
-      } else if (tab === 'faq') {
-        renderFaqProject(faqData);
-      } else {
-        renderDevProjects(allDevProjects);
-      }
+  function moveTabLine(tab) {
+    tabLine.style.width = `${tab.offsetWidth}px`;
+    tabLine.style.transform = `translateX(${tab.offsetLeft}px)`;
+  }
+
+  function selectTab(tab, focus) {
+    tabList.forEach(t => {
+      const selected = t === tab;
+      t.setAttribute('aria-selected', String(selected));
+      t.tabIndex = selected ? 0 : -1;
+    });
+    moveTabLine(tab);
+    if (focus) tab.focus();
+
+    const name = tab.dataset.filter;
+    if (name === 'content') {
+      renderStories(allStories);
+    } else if (name === 'faq') {
+      if (faqData) renderFaqProject(faqData);
+    } else {
+      renderDevProjects(allDevProjects);
+    }
+  }
+
+  tabList.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectTab(tab));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); selectTab(tabList[(i + 1) % tabList.length], true); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); selectTab(tabList[(i - 1 + tabList.length) % tabList.length], true); }
+      if (e.key === 'Home')       { e.preventDefault(); selectTab(tabList[0], true); }
+      if (e.key === 'End')        { e.preventDefault(); selectTab(tabList[tabList.length - 1], true); }
     });
   });
+
+  // Position the underline on load, after fonts settle, and on resize.
+  const currentTab = () => tabList.find(t => t.getAttribute('aria-selected') === 'true');
+  moveTabLine(currentTab());
+  window.addEventListener('resize', () => moveTabLine(currentTab()));
+  if (document.fonts) document.fonts.ready.then(() => moveTabLine(currentTab()));
 
   // ── Fetch all JSON files in parallel ──
   Promise.all([
