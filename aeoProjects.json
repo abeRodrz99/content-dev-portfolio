@@ -90,7 +90,7 @@
     {
       "id": "rewrites",
       "type": "articles",
-      "title": "AI-Friendly Content Rewrites",
+      "title": "AI-Structured Content",
       "description": "Existing Built In listicles restructured so search engines and AI assistants can pull out accurate, citable answers quickly.",
       "goal": "Keep established pages visible as discovery shifts toward AI-generated answers, by making each page's key facts easy to find, extract and cite accurately.",
       "work": [
