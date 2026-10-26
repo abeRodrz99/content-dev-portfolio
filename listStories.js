@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         number: '01',
         title: 'SEO Content',
-        description: 'Search-first content designed to get found. Industry listicles that Built In clients opted into to grow their search visibility, alongside evergreen explainers and guides built around the questions audiences actually search.',
+        description: 'Industry roundups designed to earn search visibility. Built In clients opted into these listicles to get in front of audiences searching their market, each one structured around the queries people actually use.',
         category: 'SEO & GEO',
         primary: true
       },
